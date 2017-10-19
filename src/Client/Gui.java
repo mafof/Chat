@@ -88,7 +88,7 @@ public class Gui {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if(!Main.isSetting) {
-					System.out.println("Вы не настроили приложение!!!");
+					System.out.println("You do'nt setting application!!!");
 				} else {
 					if(!Main.gui.inputTextChat.getText().isEmpty()) {
 						Main.netSend.sendMessage("message");
@@ -105,7 +105,7 @@ public class Gui {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if(!Main.isSetting) {
-					System.out.println("Вы не настроили приложение!!!");
+					System.out.println("You do'nt setting application!!!");
 				}
 			}
 		});
@@ -116,7 +116,7 @@ public class Gui {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if(!Main.isSetting) {
-					System.out.println("Вы не настроили приложение!!!");
+					System.out.println("You do'nt setting application!!!");
 				}
 			}
 		});

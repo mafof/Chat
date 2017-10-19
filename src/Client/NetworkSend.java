@@ -22,14 +22,18 @@ public class NetworkSend {
 		}
 	}
 	
+	
+	/**
+	 * Клиентская отправка сообщения
+	 * @param type - тип отправляемых данных
+	 */
 	public static void sendMessage(String type) {
 		try {
 			switch(type) {
 			case "message":
-				byte [] msg = ("[" + Main.getData() + "]" + Main.nickname + ": " + Main.gui.inputTextChat.getText()).getBytes(); 
+				byte [] msg = ("msg;"+ Main.nickname + ";" + Main.gui.inputTextChat.getText()).getBytes(); 
 				packet.setData(msg);
 				server.send(packet);
-				System.out.println("[" + Main.getData() + "]" + Main.nickname + ": " + Main.gui.inputTextChat.getText());
 				break;
 			}	
 		} catch (IOException e) {
