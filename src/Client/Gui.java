@@ -2,6 +2,8 @@ package Client;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -91,7 +93,14 @@ public class Gui {
 					System.out.println("You do'nt setting application!!!");
 				} else {
 					if(!Main.gui.inputTextChat.getText().isEmpty()) {
-						Main.netSend.sendMessage("message");
+						String _temp = Main.checkMessageCommand(Main.gui.inputTextChat.getText(), "!pm ");
+						
+						if(_temp != null) {
+							Main.gui.inputTextChat.setText(_temp);
+							Main.netSend.sendMessage("privMsg");	
+						} else {
+							Main.netSend.sendMessage("message");
+						}
 						Main.gui.inputTextChat.setText("");
 					}
 				}
@@ -106,6 +115,8 @@ public class Gui {
 			public void actionPerformed(ActionEvent e) {
 				if(!Main.isSetting) {
 					System.out.println("You do'nt setting application!!!");
+				} else {
+					Main.gui.chatWindow.setText("");
 				}
 			}
 		});

@@ -28,10 +28,16 @@ public class NetworkSend {
 	 * @param type - тип отправляемых данных
 	 */
 	public static void sendMessage(String type) {
+		byte [] msg;
 		try {
 			switch(type) {
 			case "message":
-				byte [] msg = ("msg;"+ Main.nickname + ";" + Main.gui.inputTextChat.getText()).getBytes(); 
+				msg = ("msg;"+ Main.nickname + ";" + Main.gui.inputTextChat.getText()).getBytes(); 
+				packet.setData(msg);
+				server.send(packet);
+				break;
+			case "privMsg":
+				msg = ("privMsg;" + InetAddress.getLocalHost().getHostAddress() + ";" + Main.nickname + ";" + Main.gui.inputTextChat.getText()).getBytes(); 
 				packet.setData(msg);
 				server.send(packet);
 				break;

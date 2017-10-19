@@ -2,6 +2,8 @@ package Client;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import Client.Gui;
 import Client.ClientNetworkThreadReceive;
@@ -35,6 +37,12 @@ public class Main {
 		gui = new Gui(null);
 		net = new ClientNetworkThreadReceive();
 		checkSettings();
+		
+		/*
+		if(checkMessageCommand("!pm 192.168.1.4 ratatyq", "!pm ") != null) {
+			System.out.println(true);
+		}
+		*/
 	}
 	
 	public static String getData() {
@@ -51,8 +59,10 @@ public class Main {
 	public static void checkReceiveMessage(String _msg) {
 		String [] msg = _msg.split(";");
 		if(msg[0].equals("msg")) {
-			System.out.println("check: " + msg[1]);
 			updateChatWindow(msg[1]);
+		} else if(msg[0].equals("privMsg")) {
+			String _tempMsg = "[ѕриватное сообщение от " + msg[1] + "] " + msg[2];
+			updateChatWindow(_tempMsg);
 		}
 	}
 	
@@ -89,6 +99,20 @@ public class Main {
 	private static void updateChatWindow(String str) {
 		chatData += "[" + getData() + "] " + str + "\n";
 		gui.chatWindow.setText(chatData);
+	}
+	
+	/**
+	 * RegEx проверка введенного сообщени€ на наличие команды
+	 */
+	public static String checkMessageCommand(String msg, String reg) {
+		Pattern p = Pattern.compile(reg);
+		Matcher m = p.matcher(msg);
+		if(m.lookingAt()) {
+			msg = msg.substring(m.end(), msg.length());
+			System.out.println(msg);
+			return msg;
+		}
+		return null;
 	}
 
 }

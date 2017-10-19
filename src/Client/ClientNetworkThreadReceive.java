@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 
 public class ClientNetworkThreadReceive extends Thread {
-	private DatagramPacket packet;
+	public DatagramPacket packet;
 	private DatagramSocket client;
 	
 	@Override
