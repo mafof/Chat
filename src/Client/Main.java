@@ -39,7 +39,7 @@ public class Main {
 		checkSettings();
 		
 		/*
-		if(checkMessageCommand("!pm 192.168.1.4 ratatyq", "!pm ") != null) {
+		if(checkMessageCommand("!pm 192.168.1.4 Hello World", "!pm ") != null) {
 			System.out.println(true);
 		}
 		*/
@@ -110,7 +110,15 @@ public class Main {
 		if(m.lookingAt()) {
 			msg = msg.substring(m.end(), msg.length());
 			System.out.println(msg);
-			return msg;
+			
+			Pattern p2 = Pattern.compile(" ");
+			Matcher m2 = p2.matcher(msg);
+			
+			if(m2.find()) {
+				msg = msg.substring(m2.end(), msg.length());
+				System.out.println(msg);
+				return msg;
+			}	
 		}
 		return null;
 	}
