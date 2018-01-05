@@ -3,3 +3,6 @@
 settings.txt
 bin/
 .settings/
+.idea/
+Chat.iml
+out/
