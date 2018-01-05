@@ -6,7 +6,7 @@ import java.net.InetAddress;
 import java.net.DatagramPacket;
 
 /**
- * Только для принятия данных
+ * Class server for Server part
  */
 public class ServerNetworkThreadReceive extends Thread{
 	
@@ -16,18 +16,19 @@ public class ServerNetworkThreadReceive extends Thread{
 	@Override
 	public void run() {
 		try {
-			System.out.println("Поток создан");
+			System.out.println("Starting server");
 			socket = new DatagramSocket(5588);
 			
 			byte [] buf = new byte[100000];
 			packet = new DatagramPacket(buf, buf.length);
 			
 			while(true) {
-				System.out.println("Жду пакета");
+				System.out.println("Wait packet");
 				socket.receive(packet);
 				
-				System.out.println("Пакет пришел");
+				System.out.println("Come packet");
 				String res = new String(packet.getData(), 0, packet.getLength());
+
 				System.out.println(res);
 				
 				MainServer.updateUserList(packet.getAddress());

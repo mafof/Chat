@@ -7,6 +7,10 @@ import java.io.IOException;
 
 import Client.Main;
 
+/**
+ * Class for jobs with Files
+ */
+
 public class FilesHadler {
 	
 	private static File file;

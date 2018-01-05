@@ -4,14 +4,10 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import Client.Gui;
-import Client.ClientNetworkThreadReceive;
-import Client.NetworkSend;
 import Utility.FilesHadler;
 
 /**
- * Порты =>
+ * Ports =>
  * 6688 - Client part
  * 5588 - Server part
  * @author mafof
@@ -107,23 +103,32 @@ public class Main {
 	/**
 	 * Check command on whitespace
 	 */
-	public static String checkMessageCommand(String msg, String reg) {
-		Pattern p = Pattern.compile(reg);
-		Matcher m = p.matcher(msg);
-		if(m.lookingAt()) {
-			msg = msg.substring(m.end(), msg.length());
-			System.out.println(msg);
-			
-			Pattern p2 = Pattern.compile(" ");
-			Matcher m2 = p2.matcher(msg);
-			
-			if(m2.find()) {
-				msg = msg.substring(m2.end(), msg.length());
-				System.out.println(msg);
-				return msg;
-			}	
+	public static void checkMessageCommand() {
+		System.out.println("call -> checkMessageCommand()");
+
+		String msg = gui.inputTextChat.getText();
+		if(msg == null || msg.isEmpty()) return; // <= may be catching NPE [!]
+
+		String[] command;
+		Matcher m = Pattern.compile("![a-zA-Z]").matcher(msg);
+
+		if(!m.find()) {
+			netSend.sendMessage("message", msg);
+			return;
 		}
-		return null;
+
+		command = msg.substring(1, msg.length()).split(" ");
+		switch (command[0]) {
+			case "pm": // Private message
+				if(Pattern.compile("\\d{3}.\\d{3}.\\d{1,3}.\\d{1,3}").matcher(command[1]).matches())
+					netSend.sendMessage("privMsg", command[1], command[2]);
+				else
+					gui.chatWindow.setText("Введите команду правильно!"); // workaround
+				break;
+			default:
+				System.out.println("Command not found");
+				break;
+		}
 	}
 
 }

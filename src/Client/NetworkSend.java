@@ -22,24 +22,27 @@ public class NetworkSend {
 		}
 	}
 	
-	
-	/**
-	 * Клиентская отправка сообщения
-	 * @param type - тип отправляемых данных
-	 */
-	public static void sendMessage(String type) {
+
+	public static void sendMessage(String type, String ... message) {
 		byte [] msg;
 		try {
 			switch(type) {
-			case "message":
-				msg = ("msg;"+ Main.nickname + ";" + Main.gui.inputTextChat.getText()).getBytes(); 
-				packet.setData(msg);
-				server.send(packet);
+				case "message": // simple message
+					msg = ("msg;"+ Main.nickname + ";" + message[0]).getBytes();
+					packet.setData(msg);
+					server.send(packet);
 				break;
-			case "privMsg":
-				msg = ("privMsg;" + InetAddress.getLocalHost().getHostAddress() + ";" + Main.nickname + ";" + Main.gui.inputTextChat.getText()).getBytes(); 
-				packet.setData(msg);
-				server.send(packet);
+				case "privMsg": // Private message
+					msg = (
+						"privMsg;" +
+						message[0] + ";" + // ip to user
+						InetAddress.getLocalHost().getHostAddress() + ";" +  // ip from user
+						Main.nickname + ";" +
+						message[1]
+					).getBytes();
+
+					packet.setData(msg);
+					server.send(packet);
 				break;
 			}	
 		} catch (IOException e) {

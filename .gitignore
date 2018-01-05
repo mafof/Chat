@@ -6,3 +6,6 @@ bin/
 .idea/
 Chat.iml
 out/
+chat.properties
+chat.xml
+module_chat.xml
