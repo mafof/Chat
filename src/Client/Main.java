@@ -51,16 +51,24 @@ public class Main {
 	}
 
 	/**
-	 * Checked type message
+	 * Check coming from the server message
 	 * @param _msg - user message from server
 	 */
 	public static void checkReceiveMessage(String _msg) {
 		String [] msg = _msg.split(";");
-		if(msg[0].equals("msg")) {
-			updateChatWindow(msg[1]);
-		} else if(msg[0].equals("privMsg")) {
-			String _tempMsg = "[Private message from " + msg[1] + "] " + msg[2];
-			updateChatWindow(_tempMsg);
+		switch (msg[0]) {
+			case "msg":
+                System.out.println("[DEBUG]"+"come message " + msg[1]);
+				updateChatWindow(msg[1]);
+				break;
+			case "privMsg":
+                System.out.println("[DEBUG]"+"come private message from "+msg[1]+" text: "+msg[2]);
+				String _tempMsg = "[Private message from " + msg[1] + "] " + msg[2];
+				updateChatWindow(_tempMsg);
+				break;
+			default:
+				System.out.println("unknown type data");
+				break;
 		}
 	}
 	
@@ -104,8 +112,6 @@ public class Main {
 	 * Check command on whitespace
 	 */
 	public static void checkMessageCommand() {
-		System.out.println("call -> checkMessageCommand()");
-
 		String msg = gui.inputTextChat.getText();
 		if(msg == null || msg.isEmpty()) return; // <= may be catching NPE [!]
 
@@ -120,10 +126,10 @@ public class Main {
 		command = msg.substring(1, msg.length()).split(" ");
 		switch (command[0]) {
 			case "pm": // Private message
-				if(Pattern.compile("\\d{3}.\\d{3}.\\d{1,3}.\\d{1,3}").matcher(command[1]).matches())
-					netSend.sendMessage("privMsg", command[1], command[2]);
-				else
-					gui.chatWindow.setText("Введите команду правильно!"); // workaround
+				if(Pattern.compile("\\d{3}.\\d{3}.\\d{1,3}.\\d{1,3}").matcher(command[1]).matches()) {
+                    netSend.sendMessage("privMsg", command[1], command[2]);
+                    updateChatWindow("[private message to " + command[1] + "] " + command[2]);
+                } else { updateChatWindow("Введите команду правильно!"); }
 				break;
 			default:
 				System.out.println("Command not found");

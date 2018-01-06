@@ -21,7 +21,6 @@ public class ClientNetworkThreadReceive extends Thread {
 				System.out.println("Wait packet");
 				client.receive(packet);
 				String res = new String(packet.getData(), 0, packet.getLength());
-				System.out.println("Packet receive <" + res + ">");
 				
 				Main.checkReceiveMessage(res);
 				

@@ -92,6 +92,7 @@ public class Gui {
 				return;
 			}
 			Main.checkMessageCommand();
+			inputTextChat.setText(""); // clear input text field
 		});
 
 		bt_clear = new JButton("Clear chat");
