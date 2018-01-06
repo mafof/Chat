@@ -127,8 +127,14 @@ public class Main {
 		switch (command[0]) {
 			case "pm": // Private message
 				if(Pattern.compile("\\d{3}.\\d{3}.\\d{1,3}.\\d{1,3}").matcher(command[1]).matches()) {
-                    netSend.sendMessage("privMsg", command[1], command[2]);
-                    updateChatWindow("[private message to " + command[1] + "] " + command[2]);
+				    String _tempMessage = "";
+				    for(int i=2; i < command.length; i++) {
+				        if(i != 2) _tempMessage += " " + command[i];
+				        else _tempMessage += command[i];
+				    }
+
+                    netSend.sendMessage("privMsg", command[1], _tempMessage);
+                    updateChatWindow("[private message to " + command[1] + "] " +_tempMessage);
                 } else { updateChatWindow("Введите команду правильно!"); }
 				break;
 			default:

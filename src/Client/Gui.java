@@ -6,6 +6,7 @@ import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import java.util.regex.Pattern;
 
 public class Gui {
 	// Frames =>
@@ -102,6 +103,7 @@ public class Gui {
 				System.out.println("You don't setting application!!!");
 			} else {
 				Main.gui.chatWindow.setText("");
+				Main.chatData = "";
 			}
 		});
 		
@@ -125,6 +127,13 @@ public class Gui {
 		bt_setting_save.addActionListener(n -> {
 			Main.ip = setting_ip.getText();
 			Main.nickname = setting_nickname.getText();
+
+            // Check on valid ip =>
+            if(!Pattern.compile("\\d{3}.\\d{3}.\\d{1,3}.\\d{1,3}").matcher(Main.ip).matches()) {
+                setting_ip.setText("Введите правильные данные");
+                return;
+            }
+
 			System.out.println(Main.ip);
 			System.out.println(Main.nickname);
 			Main.checkSettingsVariable();
